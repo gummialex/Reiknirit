@@ -12,7 +12,12 @@ public class Hittast {
         int[] lodgingCost = new int[n]; // array to hold onto the lodging cost at each location
 
         for (int i = 0; i < n; i++) {
-            io.getInt(); // The cost of each location (vertex)
+            lodgingCost[i] = io.getInt(); // The cost of each location (vertex)
+        }
+
+        for (int i = 0; i < m; i++) {
+            int u = io.getInt(); // making edges
+            int v = io.getInt();
 
         }
     }
