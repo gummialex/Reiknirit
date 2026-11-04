@@ -1,5 +1,6 @@
 import edu.princeton.cs.algs4.EdgeWeightedGraph;
 import edu.princeton.cs.algs4.Edge;
+import edu.princeton.cs.algs4.DijkstraUndirectedSP;
 
 public class Hittast {
     public static void main(String[] args) {
@@ -28,5 +29,22 @@ public class Hittast {
             netB.addEdge(new Edge(u, v, b));
 
         }
+
+        DijkstraUndirectedSP distA = new DijkstraUndirectedSP(netA, 0);
+        DijkstraUndirectedSP distB = new DijkstraUndirectedSP(netB, n - 1);
+
+        long bestDist = Long.MAX_VALUE
+        for (int d = 0; d < n; d++) {
+            long travelA = (long) distA.distTo(d);
+            long travelB = (long) distA.distTo(d);
+
+            long total = travelA + travelB + lodgingCost[d];
+
+            if (total < bestDist) {
+                bestDist = total
+            }
+        }
+        io.println(bestDist);
+        io.close();
     }
 }
