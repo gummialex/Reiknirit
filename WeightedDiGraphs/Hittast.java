@@ -36,7 +36,7 @@ public class Hittast {
         long bestDist = Long.MAX_VALUE;
         for (int d = 0; d < n; d++) {
             long travelA = (long) distA.distTo(d);
-            long travelB = (long) distA.distTo(d);
+            long travelB = (long) distB.distTo(d);
 
             long total = travelA + travelB + lodgingCost[d];
 
