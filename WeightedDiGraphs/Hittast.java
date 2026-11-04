@@ -33,7 +33,7 @@ public class Hittast {
         DijkstraUndirectedSP distA = new DijkstraUndirectedSP(netA, 0);
         DijkstraUndirectedSP distB = new DijkstraUndirectedSP(netB, n - 1);
 
-        long bestDist = Long.MAX_VALUE
+        long bestDist = Long.MAX_VALUE;
         for (int d = 0; d < n; d++) {
             long travelA = (long) distA.distTo(d);
             long travelB = (long) distA.distTo(d);
@@ -41,7 +41,7 @@ public class Hittast {
             long total = travelA + travelB + lodgingCost[d];
 
             if (total < bestDist) {
-                bestDist = total
+                bestDist = total;
             }
         }
         io.println(bestDist);
