@@ -3,7 +3,6 @@ import java.util.Arrays;
 import edu.princeton.cs.algs4.Edge;
 import edu.princeton.cs.algs4.KruskalMST;
 import edu.princeton.cs.algs4.EdgeWeightedGraph;
-import edu.princeton.cs.algs4.Iterables;
 
 public class LandlineTelephoneNetwork {
 
@@ -17,22 +16,22 @@ public class LandlineTelephoneNetwork {
         EdgeWeightedGraph city = new EdgeWeightedGraph(n);
 
         boolean[] insecureB = new boolean[n];
-        for (int j = 0; j < p + 1; j++) {
+        for (int j = 0; j < p; j++) {
             insecureB[io.getInt() - 1] = true;
         }
 
-        int[] cheapest = new int[p];
+        int[] cheapest = new int[n];
         Arrays.fill(cheapest, Integer.MAX_VALUE);
 
-        int secureCount = 0;
+        int bothInsecure = Integer.MAX_VALUE;
+
         for (int i = 0; i < m; i++) {
-            int x = io.getInt(); // x and y are distinct building the line connects
-            int y = io.getInt();
+            int x = io.getInt() - 1; // x and y are distinct building the line connects
+            int y = io.getInt() - 1;
             int l = io.getInt(); // l is the est. cost of connecting those buildings
 
             if (!insecureB[x] && !insecureB[y]) {
                 city.addEdge(new Edge(x, y, l));
-                secureCount += 1;
             }
 
             else if (insecureB[x] && !insecureB[y]) {
@@ -43,24 +42,53 @@ public class LandlineTelephoneNetwork {
                 cheapest[y] = Math.min(cheapest[y], l);
             }
 
-        }
-        KruskalMST mst = new KruskalMST(city);
-        double totalW = mst.weight();
+            else {
+                bothInsecure = Math.min(bothInsecure, l);
+            }
 
-        int insecureCheapesSize = 0;
-        for (int i = 0; i < p; i++) {
-            insecureCheapesSize += 1;
+        }
+
+        if (p == n) {
+            if (n == 1) {
+                io.println(0);
+            } else if (n == 2 && bothInsecure != Integer.MAX_VALUE) {
+                io.println(bothInsecure);
+            } else {
+                io.println("impossible");
+            }
+            io.close();
+            return;
+        }
+
+        KruskalMST mst = new KruskalMST(city);
+
+        boolean impossible = false;
+        long insecureCost = 0;
+        for (int b = 0; b < n; b++) {
+            if (!insecureB[b]) {
+                continue;
+            }
+            if (cheapest[b] == Integer.MAX_VALUE) {
+                impossible = true;
+            } else {
+                insecureCost += cheapest[b];
+            }
         }
 
         int mstSize = 0;
         for (Edge e : mst.edges()) {
             mstSize += 1;
         }
-        if (secureCount - 1 != mstSize) {
+
+        if (mstSize != (n - p) - 1) { // If the edges in the mst are not the same as all secure vertacies -1
+            impossible = true;
+        }
+
+        if (impossible) {
             io.println("impossible");
-            io.flush();
         } else {
-            io.println(totalW + insecureCheapesSize);
+            long total = Math.round(mst.weight() + insecureCost);
+            io.println(total);
         }
         io.close();
 
