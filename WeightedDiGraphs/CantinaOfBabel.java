@@ -1,4 +1,6 @@
 import java.lang.reflect.Array;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -37,6 +39,25 @@ public class CantinaOfBabel {
                 }
             }
         }
+
+        KosarajuSharirSCC scc = new KosarajuSharirSCC(cantina);
+
+        int totalComponents = scc.count();
+
+        Map<Integer, Integer> counteachComponent = new HashMap<>(totalComponents);
+
+        for (int i = 0; i < totalComponents; i++) {
+            counteachComponent.put(i, 0);
+        }
+
+        for (int i = 0; i < n; i++) {
+            int id = scc.id(i);
+            counteachComponent.put(id, counteachComponent.get(id) + 1);
+        }
+
+        int biggestId = Collections.max(counteachComponent.values());
+        System.out.println(n - biggestId);
+        scanner.close();
 
     }
 }
