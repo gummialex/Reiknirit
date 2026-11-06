@@ -25,7 +25,7 @@ public class CantinaOfBabel {
         }
 
         for (int i = 0; i < n; i++) {
-            String check = allInCantina.get(i)[1];
+            String check = allInCantina.get(i)[0];
             for (int j = 0; j < n; j++) {
                 if (i == j) {
                     continue;
