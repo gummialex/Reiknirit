@@ -27,8 +27,13 @@ public class CantinaOfBabel {
             for (int j = 0; j < n; j++) {
                 if (i == j) {
                     continue;
-                } else if (allInCantina.containsKey(check)) {
-
+                }
+                String[] understoodbyJ = allInCantina.get(j);
+                for (String lang : understoodbyJ) {
+                    if (lang.equals(check)) {
+                        cantina.addEdge(i, j);
+                        break;
+                    }
                 }
             }
         }
